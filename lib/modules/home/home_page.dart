@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:get/get.dart';
 import 'package:mask_text_input_formatter/mask_text_input_formatter.dart';
+import 'package:share/share.dart';
+import 'package:whatslink/theme/colors_theme.dart';
 import 'package:whatslink/widgets/custom_text_form_field_widget.dart';
 
 import 'home_controller.dart';
@@ -51,15 +54,6 @@ class HomePage extends GetView<HomeController> {
                   padding: const EdgeInsets.all(8.0),
                   child: Column(
                     children: [
-                      /*Container(
-                        height: 140,
-                        child: Center(
-                          child: FaIcon(
-                            FontAwesomeIcons.whatsapp,
-                            size: 100,
-                          ),
-                        ),
-                      ),*/
                       Container(
                         margin: EdgeInsets.only(bottom: 20, top: 12),
                         child: Text(
@@ -126,6 +120,76 @@ class HomePage extends GetView<HomeController> {
                                 width: 8,
                               ),
                               Text('Enviar pelo WhatsApp'),
+                            ],
+                          ),
+                        ),
+                      ),
+                      Container(
+                        width: Get.width,
+                        child: ElevatedButton(
+                          style: ButtonStyle(
+                              backgroundColor: MaterialStateProperty.all<Color>(
+                            Color(0xFF075E54),
+                          )),
+                          onPressed: () {
+                            final FormState form = formKey.currentState;
+                            if (form.validate()) {
+                              form.save();
+                              controller.url = controller.generateUrl();
+                              Get.dialog(
+                                AlertDialog(
+                                  title: Text('Link gerado'),
+                                  content: Text(
+                                      'Seu link está pronto! Deseja copiar ou compartilhar?'),
+                                  actions: [
+                                    FlatButton(
+                                      child: Text(
+                                        'COPIAR',
+                                        style: TextStyle(color: whatsColor),
+                                      ),
+                                      onPressed: () {
+                                        Clipboard.setData(ClipboardData(
+                                            text: controller.url));
+                                        Get.back();
+                                        scaffoldKey.currentState.showSnackBar(
+                                          SnackBar(
+                                            content: Text(
+                                              "Copiado para a área de transferência",
+                                            ),
+                                            action: SnackBarAction(
+                                              label: 'FECHAR',
+                                              onPressed: () => scaffoldKey
+                                                  .currentState
+                                                  .hideCurrentSnackBar(),
+                                            ),
+                                          ),
+                                        );
+                                      },
+                                    ),
+                                    FlatButton(
+                                        child: Text(
+                                          'COMPARTILHAR',
+                                          style: TextStyle(color: whatsColor),
+                                        ),
+                                        onPressed: () async {
+                                          Get.back();
+                                          await Share.share(controller.url);
+                                        }),
+                                  ],
+                                ),
+                                barrierDismissible: false,
+                              );
+                              //await controller.saveItem();
+                            }
+                          },
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              Icon(Icons.link),
+                              SizedBox(
+                                width: 8,
+                              ),
+                              Text('Gerar link'),
                             ],
                           ),
                         ),

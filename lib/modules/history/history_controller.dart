@@ -5,12 +5,15 @@ import 'package:permission_handler/permission_handler.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:whatslink/data/models/Data.dart';
 import 'package:whatslink/data/provider/database_helper.dart';
+import 'package:whatslink/utils/helper.dart';
 
 class HistoryController extends GetxController {
   var listItems = List<Data>().obs;
 
   static const platform =
       const MethodChannel('flutter_contacts/launch_contacts');
+
+  final Utils utils = Utils();
 
   @override
   void onInit() {

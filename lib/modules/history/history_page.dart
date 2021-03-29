@@ -35,7 +35,7 @@ class HistoryPage extends GetView<HistoryController> {
                         AlertDialog(
                           title: Text("Excluir tudo"),
                           content: Text(
-                            "Tem certeza que deseja excluir todos os registros? Esta operação não poderá ser desfeita.",
+                            "Tem certeza que deseja excluir todos os registros? Isso não exclui os contatos salvos por meio do aplicativo na agenda, apenas do histórico. Esta operação não poderá ser desfeita.",
                           ),
                           actions: [
                             FlatButton(
@@ -271,7 +271,7 @@ class PopUpMenu extends StatelessWidget {
                 AlertDialog(
                   title: Text("Excluir registro"),
                   content: Text(
-                    "Tem certeza que deseja excluir esse registro? Esta operação não poderá ser desfeita.",
+                    "Tem certeza que deseja excluir esse registro? Isso não exclui o contato salvo por meio do aplicativo na agenda, apenas do histórico. Esta operação não poderá ser desfeita.",
                   ),
                   actions: [
                     FlatButton(

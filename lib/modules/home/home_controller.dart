@@ -3,8 +3,11 @@ import 'package:get/get.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:whatslink/data/models/Data.dart';
 import 'package:whatslink/data/provider/database_helper.dart';
+import 'package:whatslink/utils/helper.dart';
 
 class HomeController extends GetxController {
+  final Utils utils = Utils();
+
   final _number = "".obs;
   get number => this._number.value;
   set number(value) => this._number.value = value;
@@ -12,6 +15,10 @@ class HomeController extends GetxController {
   final _message = "".obs;
   get message => this._message.value;
   set message(value) => this._message.value = value;
+
+  final _url = "".obs;
+  get url => this._url.value;
+  set url(value) => this._url.value = value;
 
   onChangedNumber(value, context) {
     this.number = value;
@@ -40,19 +47,20 @@ class HomeController extends GetxController {
     }
   }
 
+  String generateUrl() => utils.generateUrl(this.message, this.number);
+
   saveItem() {
-    Map<String, String> queryParams = {};
-    this.message == "" ? null : queryParams.addAll({'text': this.message});
-    var uri = Uri.https('wa.me', '/55${this.number.toString()}', queryParams);
+    String uri = generateUrl();
 
     final Data item = Data(
-        number: this.number,
-        message: this.message,
-        uri: uri.toString(),
-        isSaved: 0);
+      number: this.number,
+      message: this.message,
+      uri: uri,
+      isSaved: 0,
+    );
 
     DatabaseHelper.instance.insert(item);
 
-    launchURL(uri.toString());
+    launchURL(uri);
   }
 }
