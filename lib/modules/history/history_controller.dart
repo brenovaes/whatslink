@@ -1,5 +1,4 @@
 import 'package:contacts_service/contacts_service.dart';
-import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:permission_handler/permission_handler.dart';
@@ -62,7 +61,7 @@ class HistoryController extends GetxController {
     }
   }
 
-  void addToContacts({String number, String name}) async {
+  Future<bool> addToContacts({String number, String name}) async {
     try {
       PermissionStatus permission = await Permission.contacts.status;
       if (permission != PermissionStatus.granted) {
@@ -74,21 +73,9 @@ class HistoryController extends GetxController {
           ];
           Contact newContact = Contact(givenName: name, phones: phones);
           await ContactsService.addContact(newContact);
+          return Future<bool>.value(true);
         } else {
-          Get.dialog(
-            AlertDialog(
-              title: Text("Permissão necessária"),
-              content: Text(
-                  "A permissão de acesso aos contatos é necessária para o correto funcionamento do aplicativo."),
-              actions: [
-                FlatButton(
-                  onPressed: () => Get.back(),
-                  child: Text("FECHAR"),
-                ),
-              ],
-            ),
-          );
-          //_handleInvalidPermissions(context);
+          return Future<bool>.value(false);
         }
       } else {
         List<Item> phones = [
@@ -96,6 +83,7 @@ class HistoryController extends GetxController {
         ];
         Contact newContact = Contact(givenName: name, phones: phones);
         await ContactsService.addContact(newContact);
+        return Future<bool>.value(true);
       }
     } catch (e) {
       print(e);

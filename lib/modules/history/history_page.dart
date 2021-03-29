@@ -212,34 +212,51 @@ class PopUpMenu extends StatelessWidget {
                               final FormState form = formKey.currentState;
                               if (form.validate()) {
                                 form.save();
-                                controller.addToContacts(
-                                    name: controller.name, number: number);
-                                isSaved = 1;
-                                controller.updateIsSaved(
-                                  new Data(
-                                    id: id,
-                                    uri: uri,
-                                    message: message,
-                                    number: number,
-                                    isSaved: isSaved,
-                                  ),
-                                );
-                                form.reset();
-                                Get.back();
-                                Get.dialog(
-                                  AlertDialog(
-                                    title: Text("Contato salvo!"),
-                                    content: Text(
-                                      "O novo contato foi salvo na sua agenda.",
+                                if (await controller.addToContacts(
+                                  name: controller.name,
+                                  number: number,
+                                )) {
+                                  isSaved = 1;
+                                  controller.updateIsSaved(
+                                    new Data(
+                                      id: id,
+                                      uri: uri,
+                                      message: message,
+                                      number: number,
+                                      isSaved: isSaved,
                                     ),
-                                    actions: [
-                                      FlatButton(
-                                        onPressed: () => Get.back(),
-                                        child: Text('FECHAR'),
+                                  );
+                                  form.reset();
+                                  Get.back();
+                                  Get.dialog(
+                                    AlertDialog(
+                                      title: Text("Contato salvo!"),
+                                      content: Text(
+                                        "O novo contato foi salvo na sua agenda.",
                                       ),
-                                    ],
-                                  ),
-                                );
+                                      actions: [
+                                        FlatButton(
+                                          onPressed: () => Get.back(),
+                                          child: Text('FECHAR'),
+                                        ),
+                                      ],
+                                    ),
+                                  );
+                                } else {
+                                  Get.dialog(
+                                    AlertDialog(
+                                      title: Text("Permissão necessária"),
+                                      content: Text(
+                                          "A permissão de acesso aos contatos é necessária para o correto funcionamento do aplicativo."),
+                                      actions: [
+                                        FlatButton(
+                                          onPressed: () => Get.back(),
+                                          child: Text("FECHAR"),
+                                        ),
+                                      ],
+                                    ),
+                                  );
+                                }
                               }
                             },
                           ),
