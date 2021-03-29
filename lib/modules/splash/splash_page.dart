@@ -29,7 +29,7 @@ class _SplashPageState extends State<SplashPage> {
               child: Text(
                 'teste',
               ),
-            )
+            ),
           ],
         ),
       ),

@@ -2,7 +2,6 @@ import 'package:contacts_service/contacts_service.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:permission_handler/permission_handler.dart';
-import 'package:url_launcher/url_launcher.dart';
 import 'package:whatslink/data/models/Data.dart';
 import 'package:whatslink/data/provider/database_helper.dart';
 import 'package:whatslink/utils/helper.dart';
@@ -48,12 +47,8 @@ class HistoryController extends GetxController {
     });
   }
 
-  launchURL(String uri) async {
-    if (await canLaunch(uri)) {
-      await launch(uri);
-    } else {
-      throw 'Could not launch $uri';
-    }
+  launchURL(String uri) {
+    utils.launchURL(uri);
   }
 
   void launchContacts() async {

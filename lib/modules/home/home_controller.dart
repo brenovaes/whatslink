@@ -1,6 +1,5 @@
 import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
-import 'package:url_launcher/url_launcher.dart';
 import 'package:whatslink/data/models/Data.dart';
 import 'package:whatslink/data/provider/database_helper.dart';
 import 'package:whatslink/utils/helper.dart';
@@ -39,13 +38,13 @@ class HomeController extends GetxController {
   validateMessage(value) =>
       value.length >= 0 ? null : 'Insira uma mensagem válida.';
 
-  launchURL(uri) async {
-    if (await canLaunch(uri)) {
-      await launch(uri);
-    } else {
-      throw 'Could not launch $uri';
-    }
-  }
+  // launchURL(uri) async {
+  //   if (await canLaunch(uri)) {
+  //     await launch(uri);
+  //   } else {
+  //     throw 'Could not launch $uri';
+  //   }
+  // }
 
   String generateUrl() => utils.generateUrl(this.message, this.number);
 
@@ -61,6 +60,6 @@ class HomeController extends GetxController {
 
     DatabaseHelper.instance.insert(item);
 
-    launchURL(uri);
+    utils.launchURL(uri);
   }
 }

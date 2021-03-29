@@ -20,6 +20,7 @@ dependencies:
   contacts_service: ^0.4.6
   permission_handler: ^5.1.0+2
   share: ^0.6.5+4
+  package_info: ^0.4.3+4
 
   cupertino_icons: ^1.0.0
 
