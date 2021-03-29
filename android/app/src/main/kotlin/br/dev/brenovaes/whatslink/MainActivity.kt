@@ -1,0 +1,6 @@
+package br.dev.brenovaes.whatslink
+
+import io.flutter.embedding.android.FlutterActivity
+
+class MainActivity: FlutterActivity() {
+}
