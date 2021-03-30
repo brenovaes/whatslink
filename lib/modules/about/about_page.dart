@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:get/get.dart';
 import 'package:whatslink/modules/about/about_controller.dart';
+import 'package:whatslink/utils/whats_link_icons.dart';
 
 class AboutPage extends GetView<AboutController> {
   final controller = Get.put(AboutController());
@@ -34,7 +34,7 @@ class AboutPage extends GetView<AboutController> {
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                       Icon(
-                        FontAwesomeIcons.whatsapp,
+                        WhatsLink.whatslink,
                         size: 140,
                       ),
                       SizedBox(
