@@ -134,7 +134,7 @@ class HomePage extends GetView<HomeController> {
                               if (form.validate()) {
                                 form.save();
                                 await controller.saveItem();
-                                //form.reset();
+                                form.reset();
                               }
                             },
                             child: Row(
@@ -159,6 +159,7 @@ class HomePage extends GetView<HomeController> {
                             )),
                             onPressed: () {
                               final FormState form = formKey.currentState;
+                              //print(form);
                               if (form.validate()) {
                                 form.save();
                                 controller.url = controller.generateUrl();
